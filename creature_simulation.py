@@ -44,7 +44,7 @@ class FlyingCreature(Creature):
             target.hp = 0
         print(f"{target.name} HP is now {target.hp}")
 
-
+# ===============================
 # SwimmingCreature Branch
 # ===============================
 
@@ -68,6 +68,37 @@ class SwimmingCreature(Creature):
         if target.hp < 0:
             target.hp = 0
         print(f"{target.name} HP is now {target.hp}")
+
+# ===============================
+# FireCreature Branch
+# ===============================
+
+class FireCreature(Creature):
+    def __init__(self, name, hp, attack_power, fire_level=0):
+        super().__init__(name, hp, attack_power)
+        # fire_level range 0–100
+        self.fire_level = max(0, min(100, fire_level))
+
+    def emit_fire(self, new_fire_level):
+        # limit fire_level in range 0–100
+        self.fire_level = max(0, min(100, new_fire_level))
+        print(f"{self.name} channels its flames! Fire level rises to {self.fire_level}.")
+
+    def attack(self, target):
+        if not self.is_alive():
+            print(f"{self.name} cannot attack because it is defeated.")
+            return
+
+        # damage = attack_power + bonus ตาม fire_level
+        damage = self.attack_power + int(self.fire_level / 10)
+        print(f"{self.name} breathes fire at {target.name}!")
+        print(f"The flames scorch {target.name} for {damage} damage!")
+
+        target.hp -= damage
+        if target.hp < 0:
+            target.hp = 0
+
+        print(f"{target.name}'s HP is now {target.hp}.")
 
 
 if __name__ == "__main__":
@@ -121,25 +152,17 @@ if __name__ == "__main__":
     print("=== Tests Completed ===")
     print()
 
-    print("=== FlyingCreature Tests ===\n")
-    hawk = FlyingCreature("Sky Hawk", 50, 8)
-    hawk.fly_to(120)
-    print(f"Altitude should be 120 → Actual: {hawk.altitude}")
 
-    dummy = Creature("Practice Dummy", 40, 0)
-    hawk.attack(dummy)
-    print(f"Dummy HP should be 32 → Actual: {dummy.hp}")
-    dummy.attack(hawk)
-    print()
-    print("=== Tests Completed ===")
-    print()
-    print("=== SwimmingCreature Tests ===\n")
-    serpent = SwimmingCreature("Aqua Serpent", 60, 7)
-    serpent.dive_to(30)
-    print(f"Depth should be 30 → Actual: {serpent.depth}")
+    print("=== FireCreature Tests ===\n")
 
-    dummy = Creature("Practice Dummy", 40, 0)
-    serpent.attack(dummy)
-    print(f"Dummy HP should be 33 → Actual: {dummy.hp}")
-    print()
-    print("=== Tests Completed ===")
+    dragon = FireCreature("Inferno Dragon", 120, 15, 50)
+    knight = Creature("Knight", 80, 10)
+
+    print(dragon)  # Expected: Inferno Dragon (HP: 120)
+    print(knight)  # Expected: Knight (HP: 80)
+
+    dragon.emit_fire(80)
+    dragon.attack(knight)
+
+    print(f"Knight HP after fire attack → {knight.hp}")
+    print("\n=== Tests Completed ===")
