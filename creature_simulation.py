@@ -152,6 +152,30 @@ if __name__ == "__main__":
     print("=== Tests Completed ===")
     print()
 
+    print("=== FlyingCreature Tests ===\n")
+    hawk = FlyingCreature("Sky Hawk", 50, 8)
+    hawk.fly_to(120)
+    print(f"Altitude should be 120 → Actual: {hawk.altitude}")
+
+    dummy = Creature("Practice Dummy", 40, 0)
+    hawk.attack(dummy)
+    print(f"Dummy HP should be 32 → Actual: {dummy.hp}")
+    dummy.attack(hawk)
+    print()
+    print("=== Tests Completed ===")
+    print()
+
+
+    print("=== SwimmingCreature Tests ===\n")
+    serpent = SwimmingCreature("Aqua Serpent", 60, 7)
+    serpent.dive_to(30)
+    print(f"Depth should be 30 → Actual: {serpent.depth}")
+
+    dummy = Creature("Practice Dummy", 40, 0)
+    serpent.attack(dummy)
+    print(f"Dummy HP should be 33 → Actual: {dummy.hp}")
+    print()
+    print("=== Tests Completed ===")
 
     print("=== FireCreature Tests ===\n")
 
